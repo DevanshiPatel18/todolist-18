@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport">
+    <title>My TO-DO List</title>
+    <style>
+    .add-content form {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        padding: 0;
+        margin: 0 auto;
+        width:50%;
+       margin: 0;
+       
+        }
+    .add-content input,textarea{
+        border-radius: 6px;
+        border-color: ivory;
+    }
+    button{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: azure;
+    color: darkcyan;
+    font-size: medium;
+    padding: 0.9%;
+    text-align: center;
+    border-radius: 5px;
+    box-decoration-break: 1px solid transparent;
+    }
+ h2{
+     color:darkcyan
+ }
+
+
+    body{
+        counter-reset : Count-Value;     
+    }
+    table
+    {
+        border-collapse: separate;
+    }
+    tr td:first-child:before
+    {
+    counter-increment: Count-Value;   
+    content: counter(Count-Value);
+    }
+
+    *{
+     margin: 0 auto;
+    }
+    body{
+        background-color: aliceblue;
+    }
+    header{
+        width: 100%;
+        background-color: teal;
+        padding: 30px;
+        float: left;
+        position: relative;
+        margin-bottom: 5%;
+    }
+    table{
+        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        color: teal;
+    }
+    header h1{
+        font-family: 'Courier New', Courier, monospace;
+        color: aliceblue;
+    }
+    header input{
+
+    float: right;
+    margin-right: 5%;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    background-color: azure;
+    color: darkcyan;
+    font-size: medium;
+    padding: 0.5%;
+    text-align: center;
+    border-radius: 5px;
+    box-decoration-break: 1px solid transparent;
+    
+    }
+    .mycontainer{
+        background-color: aliceblue;
+        text-align: center;
+        
+    }
+    .user{
+        float: left
+    }
+    .add-content{
+    margin-top: 1%;
+    margin-left: 5%;
+    }
+    .add-content h3{
+        margin-bottom: 0.5%;
+    }
+
+            table{    
+                width:75%;    
+                border-collapse:collapse;    
+                table-layout:fixed;           
+            }  
+            td{    
+                 border: rgb(11, 63, 105) 2px solid;    
+                word-wrap:break-word;    
+                            }    
+            table#close{    
+                
+                table-layout:default;    
+                border-collapse:seperate;    
+                border-spacing: 5px 5px;    
+                border:none;    
+                vertical-align:top;    
+            }    
+            th{
+                border: rgb(11, 63, 105) 2px solid;   
+            }
+            td{
+                padding: 0.5%;
+            }
+            td input{
+                float: right;
+                margin-right: 5%;
+                font-family: 'Courier New', Courier, monospace;
+                background-color: azure;
+                font-size: inherit;
+            }
+            table.none td    
+                {    
+                    border: none;    
+                }    
+                tr.row td{    
+                    text-decoration:italic;    
+                }    
+                th.status{    
+                    width:5%;    
+                }    
+                th.task{    
+                    width:20%;    
+                }    
+                th.taskdesc{    
+                    width:40%;    
+                    padding:5px 5px 5px 5px;    
+                }    
+                th.date{    
+                    width:8%;    
+                }    
+                th.priority{    
+                    width:7%;    
+                }
+                th.srno{
+                    width:10%;
+                }
+                th.edit{
+                    width:10%;
+                }
+    </style>
+</head>
+<body>
+    <header>
+       <input type="text" value="Hello, {{ user }} !!" name ="user" class ="user">
+        <form action="/logout" method="POST" class="logout">
+            <input type="submit" value="Log Out">
+        </form>
+    </header>
+<div class="gogo">
+<div class="mycontainer">
+    <div class="container">
+    
+        {% if todo[0] %}
+        <table>
+            <tr>
+                <th name="srno" >Sr-No</th>
+                <th name="date">Date</th>
+                <th name="task">Task</th>
+                <th name="taskdesc">Task Description</th>
+                <th name="priority">Priority</th>
+                <th name="status">Status</th>
+                <th name="edit">Edit</th>
+            </tr>
+
+             {% for i in todo %}
+
+            <tr>
+                <td></td>
+                <td>{{ i['date'] }}</td>
+                <td>{{ i['task'] }}</td>
+                <td>{{ i['taskdesc'] }}</td>
+                <td>{{ i['priority'] }}</td>
+                <td>{{ i['status'] }}</td>
+               
+                <td>
+                        <a href="./delete?j={{ i['_id'] }}"><input type="submit" value="Delete"></a>
+                        <a href="./modify?k={{ i['_id'] }}"><input type="submit" value="Edit"></a>
+                </td>
+                              
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %} 
+        <br><br><br>
+        <h2>You have no tasks !!</h2>
+        {% endif %}         
+    </div>
+</div>
+</div>
+    <div class="add-content">
+        <h2 style="margin-top: 10%; margin-bottom: 2%;"><u>Add a task :</u></h2>
+        <form action="/add" method="POST">
+            <p><input type="text"  value="{{ user }}" name ="user" placeholder="user" hidden></p>
+            <p><input type="text" name="user_id" value="{{ id }}" hidden> </p>
+            <p><input type="text" name="priority" placeholder="Priority" required></p>
+            <p><input type="text"  name=date placeholder="Date" required></p>
+            <p><input type="text" name = "task" placeholder="Task" required></p>
+            <p><textarea name="taskdesc" rows="5" cols="30" placeholder="Enter Description here..." required></textarea></p>
+            <button type="submit" value="submit" style="margin-top: 5%;">Submit</button>
+        </form>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport">
+    <title>Edit task</title>
+    <style>
+         .container{
+            margin-top: 10%;
+            margin-left: 32%;
+         }
+         form{
+             text-align: justify;
+             width: fit-content;
+             background-color: aliceblue;
+             height: 50%;
+             font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+             border-collapse: collapse;
+             border-radius: 5px;
+             padding: 5%;
+            color:darkslategray;
+         }
+         body{
+             background-color: teal;
+         }
+         .submit{
+             margin-top: 2%;
+             background-color: aliceblue;
+             font-size: medium;
+             font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+             border-radius: 5px;
+             height: 30px;
+             color:darkslategray;
+             font-weight: 400;
+             border: 2px solid lightslategray;
+         }
+         .gogo{
+            align-items: center;
+            width: 50%;
+        
+         }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="gogo">
+        <form action="/edit" method="POST">
+           <h2>Edit Task</h2>
+        {% if rec[0] %}
+        {% for n in rec %}
+        
+        <table>
+            
+            <tr>
+                <td>Date</td>
+                <td>:</td>
+                <td><input type="text" value="{{ n['date'] }}" name="date"></td>
+            </tr>
+            <tr>
+                <td>Task</td>
+                <td>:</td>
+                <td><input type="text" value="{{ n['task'] }}" name="task"></td>
+            </tr>
+            <tr>
+                <td>Task Desciption</td>
+                <td>:</td>
+                <td><textarea name="taskdesc" cols="30" rows="1">{{ n['taskdesc'] }}</textarea></td>
+            </tr>
+            <tr>
+                <td>Priority</td>
+                <td>:</td>
+                <td><input type="text" value="{{ n['priority']}}" name="priority"></td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>:</td>
+                <td>
+                    {% if n['status'] == 'no' %}
+                    <input type="radio" name="status" value="yes">
+                    <label for="male">Yes</label>
+                    <input type="radio" name="status" value="no" checked="checked">
+                    <label for="no">no</label>
+                    {% else %}
+                    <input type="radio" name="status" value="yes" checked="checked">
+                    <label for="male">Yes</label>
+                    <input type="radio" name="status" value="no">
+                    <label for="no">no</label>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+        {% endfor %}
+
+        {% else %}
+        <h3>Could not get records</h3>
+        {% endif %}
+        <input class="submit" type="submit" value="Submit">
+    </form>
+</div>
+    </div>
+</body>
+</html>

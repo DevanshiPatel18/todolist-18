@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" >
+    <title>Sign-In</title>
+   <style>
+       .my{
+           text-align: center;
+           width: 100%;
+       }
+        .loginbox{
+            text-align: center;
+            background-color: bisque;
+            width: 20%;
+            margin-top:15%;
+            margin-left: 40%;
+            height: 50%;
+        }
+        form{
+            width: fit-content;
+            padding-top: 10%;
+            padding-bottom: 10%;
+            background-color: aliceblue;
+            height: 50%;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            border-collapse: collapse;
+            border-radius: 5px;
+        }
+        body{
+            background-color: teal;
+        }
+        .submit{
+            background-color: aliceblue;
+            font-size: medium;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            border-radius: 5px;
+            height: 30px;
+        }
+   </style>
+</head>
+<body>
+    <div class="container" style="min-height:100% ; width:80%">
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-warning alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick=delete_flash(this)><span aria-hidden="true">×</span></button>
+                {{message}}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        
+        {% block body %}{% endblock %}
+        </div>
+    <div class="loginbox">
+        <div class="my">
+        <form action="/signup" method="POST">
+            <p>Username : 
+            <input type="text" name="username" required>
+
+            <p>Password :
+                <input type="password" name="pwd" required>
+            </p>
+            <p>Confirm Password :
+                <input type="password" name="cpwd" required>
+            </p>
+            <input type="submit" class="submit">
+        </form>
+    </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script>
+    function delete_flash(flash){
+        $(flash).parent().remove()
+    }
+    </script>
+</body>
+</html>
